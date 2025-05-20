@@ -1,0 +1,19 @@
+{
+  "name": "codecrew_backend",
+  "version": "1.0.0",
+  "description": "Find your crew, code your dream.",
+  "main": "index.js",
+  "scripts": {
+    "start":"node src/app.js",
+    "dev":"node src/app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Akalya D",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }       
+}
