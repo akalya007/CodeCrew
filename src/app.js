@@ -368,24 +368,79 @@
 //============================================================================
 //can use another clean way of using the auth.(Middleware)
 
+// const express=require("express");
+// const app = express();
+
+// const {adminAuth  , UserAuth} = require("./middleware/auth");
+// //Handle Auth middle for all the methods GET , POST......requests.
+// app.use("/admin" , adminAuth);
+
+// app.get("/user" , UserAuth, (req,res) =>{   //we have only one route for the user, so we can userAuth inside it like this.
+//     res.send("user data sent");
+// })
+
+// app.get("/admin/getAlluser" , (req,res) =>{
+//     res.send("All data sent");
+// })
+// app.get("/admin/deleteAlluser" , (req,res) =>{
+//     res.send("delete data sent");
+// })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server is successfully listening on the port 3000");
+// })
+//=======================================================================
+//error handling.
+
+// const express=require("express");
+// const app = express();
+                                           //order maters....use the wild card error handling always to the end .
+// app.use("/" , (err , req , res , next)=>{ //make sure , the error should always comes in the front , next at the last(this is te formate)--but using try-catch mathod is the best way.
+// if(err){
+//     console.log("first");
+//     res.status(500).send("Something went wrong");
+// }
+// }) 
+// app.get("/getUserData" , (req, res)=>{
+//     console.log("checking the getuserdata")
+//     throw new Error("jbxgfd");
+//     res.send("User data sent");
+// }
+// )
+
+// app.use("/" , (err , req , res , next)=>{ //make sure , the error should always comes in the front , next at the last(this is te formate)--but using try-catch mathod is the best way.
+// if(err){
+//     console.log("Second")
+//     res.status(500).send("Something went wrong");
+// }
+// }); 
+
+// app.listen(3000 , ()=>{
+//     console.log("Server is successfully listening on the port 3000");
+// });
+
+
+//============================================================
+//using try and catch for error handling.
+
 const express=require("express");
 const app = express();
 
-const {adminAuth  , UserAuth} = require("./middleware/auth");
-//Handle Auth middle for all the methods GET , POST......requests.
-app.use("/admin" , adminAuth);
 
-app.get("/user" , UserAuth, (req,res) =>{   //we have only one route for the user, so we can userAuth inside it like this.
-    res.send("user data sent");
-})
+app.get("/getUserData" , (req, res)=>{
+    try{
+   console.log("checking the getuserdata")
+    throw new Error("jbxgfd");
+    }catch{
+     res.send("catched data ");
+    }
+    
+    
+}
+)
 
-app.get("/admin/getAlluser" , (req,res) =>{
-    res.send("All data sent");
-})
-app.get("/admin/deleteAlluser" , (req,res) =>{
-    res.send("delete data sent");
-})
+
 
 app.listen(3000 , ()=>{
     console.log("Server is successfully listening on the port 3000");
-})
+});
