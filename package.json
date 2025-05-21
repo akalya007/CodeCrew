@@ -4,8 +4,8 @@
   "description": "Find your crew, code your dream.",
   "main": "index.js",
   "scripts": {
-    "start":"node src/app.js",
-    "dev":"node src/app.js"
+    "start": "node src/app.js",
+    "dev": "node src/app.js"
   },
   "keywords": [
     "nodejs",
@@ -14,8 +14,7 @@
   "author": "Akalya D",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
-  }       
+    "express": "^5.1.0",
+    "mongoose": "^8.15.0"
+  }
 }
-
-
