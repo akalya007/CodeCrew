@@ -66,6 +66,7 @@
 //     res.send("Hello world from the server");
 // });
 
+
 // app.listen(3000 , ()=>{
 //     console.log("server is Successfully listening on port 3000 ")
 // });
@@ -102,53 +103,209 @@
 
 //Advanced Routing concept--with using the Regax Route
 
-const express = require("express");
+// const express = require("express");
 
-const app= express();   
+// const app= express();   
 
-// work with /abc /ac----"b" is optional.
-// Route that matches "/abc" or "/ac" (the "b" is optional)
-app.get(/^\/ab?c$/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});
+// // work with /abc /ac----"b" is optional.
+// // Route that matches "/abc" or "/ac" (the "b" is optional)
+// app.get(/^\/ab?c$/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });
 
-app.get(/^\/ab+c$/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});
+// app.get(/^\/ab+c$/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });
 
-app.get(/^\/a(bc)?d$/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-}); 
+// app.get(/^\/a(bc)?d$/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// }); 
 
-app.get(/^\/ab.*cd$/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});
+// app.get(/^\/ab.*cd$/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });
 
-//if in the path 'a' is present , then it will work.--it will work in the url present with "cab"--here the a is present.
-app.get(/a/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});
+// //if in the path 'a' is present , then it will work.--it will work in the url present with "cab"--here the a is present.
+// app.get(/a/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });
 
-app.get(/.*fly$/, (req, res) => {
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});
+// app.get(/.*fly$/, (req, res) => {
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });
 
-app.get("/user", (req, res) => {
-    console.log(req.query);
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});     //url====http://localhost:3000/user?userId=101&password=testing----dynamic user Id and the parrword
+// app.get("/user", (req, res) => {
+//     console.log(req.query);
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });     //url====http://localhost:3000/user?userId=101&password=testing----dynamic user Id and the parrword
 
-app.get("/user/:userId", (req, res) => {   //dynamic api [with :(colon)]
-    console.log(req.params);
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-});  
+// app.get("/user/:userId", (req, res) => {   //dynamic api [with :(colon)]
+//     console.log(req.params);
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// });  
 
-app.get("/user/:userId/:name/:password", (req, res) => {   //dynamic api [with :(colon)]
-    console.log(req.params);
-  res.send({ firstName: "Akalya", lastName: "dhanapal" });
-}); 
+// app.get("/user/:userId/:name/:password", (req, res) => {   //dynamic api [with :(colon)]
+//     console.log(req.params);
+//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// }); 
+
+// app.listen(3000 , ()=>{
+//     console.log("server is Successfully listening on port 3000 ")
+// });
+
+
+//========================================================================================================================================
+//Episode 05--Route and Middleware.
+//=================================
+//Empty Route handler
+
+// const express =  require("express");
+// const app = express();
+
+// app.use("/user" ,(req , res) =>{
+//     //Route Handler--It can Handle any type of the Methods--get/put/delete/post.
+//    // res.send("Router Handler 1");   //If we command this--is it is the empty route handlers , it will nothing send
+//    console.log(" 1 Route Message");   //when there is no route handlers,req from the Postman will come into this Route handler and it will console it and it will do nothing. BUt thats not the correct.
+// //res.send(" 1 response");
+// })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
+//===============================================================================================
+
+//one Route can have More that one  Route handlers
+//==================================================
+
+//Route handlers
+/**
+ * one route can have multiple Routehandlers
+ * 
+ * app.use("/user" , ()=>{
+ * Router hander 
+ * },
+ * ()=>{
+ * Route handler2
+ * }
+ * )
+ */
+
+
+// const express =  require("express");
+// const app = express();
+
+// app.use("/user" ,(req , res) =>{ 
+//    //res.send("Router Handler 1");   //If we command this--is it is the empty route handlers , it will nothing send
+//    console.log(" 1 Route Message");  
+//   //res.send(" 1 response");   //when we command --there will be no response. and the next route will not be called.
+// },
+//   (req,res)=>{
+//    console.log("Route handling 2");
+//    res.send(" 2nd Response");
+//    })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
+
+
+//===================================================================================================
+//when there is no response sended, the request will be hanged. so expressjs has the next() parameter  to go for the 
+// const express =  require("express");
+// const app = express();
+
+// app.use("/user" ,(req , res , next) =>{ 
+
+//     console.log(" 1 Route Message");  
+//     res.send(" 1 response");   //when we command --there will be no response. and the next route will not be called.
+//     next();    //it is the funcrion given by the express, to called the next Route handler---bur gives the error message, one router should handle only one router handlers. 
+// },
+//   (req,res)=>{
+//    console.log("Route handling 2");
+//    res.send(" 2nd Response");
+//    })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
+//when the request is sent , it comes into the app.use and it execute line by line .
+
+//=====================================================================================================
+// //another case--playing with route handling.
+
+// const express =  require("express");
+// const app = express();
+
+// app.use("/user",
+//     (req , res , next) =>{ 
+//     console.log(" 1 Route Message");
+//     next();   //this one .
+//    // res.send(" 1 response");   
+// },
+//   (req,res , next)=>{
+//    console.log("Route handling 2");
+//   // res.send(" 2nd Response");
+//    next();
+//    },
+//     (req,res , next)=>{
+//     console.log("Route handling 3");
+//   // res.send(" 3nd Response");
+//     next();
+//    },
+//     (req,res , next)=>{
+//     console.log("Route handling 4");
+//    //res.send(" 4nd Response");
+//     next();
+//    },
+//     (req,res , next)=>{
+//      console.log("Route handling 5");
+//      res.send(" 5nd Response");
+//     next();
+//    }
+// )
+
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
+
+//=======================================================================================================
+//CORNER CASE.
+
+//we  can also place the route handlers inside the array.
+
+const express =  require("express");
+const app = express();
+
+app.use("/user",
+   [ (req , res , next) =>{ 
+    console.log(" 1 Route Message");
+    next();   //this one .
+   // res.send(" 1 response");   
+},
+  (req,res , next)=>{
+   console.log("Route handling 2");
+  // res.send(" 2nd Response");
+   next();
+   },
+    (req,res , next)=>{
+    console.log("Route handling 3");
+  // res.send(" 3nd Response");
+    next();
+   },
+    (req,res , next)=>{
+    console.log("Route handling 4");
+   //res.send(" 4nd Response");
+    next();
+   },
+    (req,res , next)=>{
+     console.log("Route handling 5");
+    // res.send(" 5nd Response");    //when No response in the route handlers.--it will be error
+    next();  //when there is no respose, and giving this next()--the 'express' is waiting for the 'next Route Handlers', so there will be error.
+   }   //But when we command this, the reqused will hang .
+])
 
 app.listen(3000 , ()=>{
-    console.log("server is Successfully listening on port 3000 ")
-});
- 
+    console.log("Server us successfully listening on the port 3000");
+})
+
+//app.use("/route" , [rH1 , rH2 , rH3], rH4,rH5)
