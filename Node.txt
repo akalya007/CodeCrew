@@ -1,3 +1,8 @@
 --postman
 
 creating the workspace/collection/test api call in
+
+episode5
+-handling muliple route handlers. playing with the code/\.
+-next()
+-next function and error along with the res.send().

@@ -1,1 +1,6 @@
 differ bet package.json and package-lock.json
+
+- what isbte middleware
+- how thw express basically handle the middleware.
+-need of the middleware, why do we need it.
+- differ between app.use and app.all in exprss

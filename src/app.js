@@ -273,39 +273,119 @@
 
 //we  can also place the route handlers inside the array.
 
-const express =  require("express");
-const app = express();
+// const express =  require("express");
+// const app = express();
 
-app.use("/user",
-   [ (req , res , next) =>{ 
-    console.log(" 1 Route Message");
-    next();   //this one .
-   // res.send(" 1 response");   
-},
-  (req,res , next)=>{
-   console.log("Route handling 2");
-  // res.send(" 2nd Response");
-   next();
-   },
-    (req,res , next)=>{
-    console.log("Route handling 3");
-  // res.send(" 3nd Response");
-    next();
-   },
-    (req,res , next)=>{
-    console.log("Route handling 4");
-   //res.send(" 4nd Response");
-    next();
-   },
-    (req,res , next)=>{
-     console.log("Route handling 5");
-    // res.send(" 5nd Response");    //when No response in the route handlers.--it will be error
-    next();  //when there is no respose, and giving this next()--the 'express' is waiting for the 'next Route Handlers', so there will be error.
-   }   //But when we command this, the reqused will hang .
-])
+// app.use("/user",
+//    [ (req , res , next) =>{ 
+//     console.log(" 1 Route Message");
+//     next();   //this one .
+//    // res.send(" 1 response");   
+// },
+//   (req,res , next)=>{
+//    console.log("Route handling 2");
+//   // res.send(" 2nd Response");
+//    next();
+//    },
+//     (req,res , next)=>{
+//     console.log("Route handling 3");
+//   // res.send(" 3nd Response");
+//     next();
+//    },
+//     (req,res , next)=>{
+//     console.log("Route handling 4");
+//    //res.send(" 4nd Response");
+//     next();
+//    },
+//     (req,res , next)=>{
+//      console.log("Route handling 5");
+//     // res.send(" 5nd Response");    //when No response in the route handlers.--it will be error
+//     next();  //when there is no respose, and giving this next()--the 'express' is waiting for the 'next Route Handlers', so there will be error.
+//    }   //But when we command this, the reqused will hang .
+// ])
 
-app.listen(3000 , ()=>{
-    console.log("Server us successfully listening on the port 3000");
-})
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
 
 //app.use("/route" , [rH1 , rH2 , rH3], rH4,rH5)
+//===============================================================================
+//another way of defining the Route handlers.
+//Using the same Route and using Route handlers.
+
+
+// const express =  require("express");
+// const app = express();
+
+// app.use("/user" , (req , res , next) =>{
+//     console.log("Route handler 1");   //this chain od methods are called the         middleware , it was called between the reqest handler.
+//     next();
+// })
+// app.use("/user" , (req , res , next) =>{
+//     console.log("Route handler 2");        //this is actuaaly the response. handler. It send the response , so it is called soo.
+//     res.send("Route 2");
+//     next();
+// })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server us successfully listening on the port 3000");
+// })
+
+
+//=================================================================================
+//Authorized
+
+// const express=require("express");
+// const app = express();
+
+// //Handle Auth middle for all the methods GET , POST......requests.
+// app.use("/admin" , (req , res , next)=>{
+//     console.log("Admin auth is getting checked");
+//     const token ="xyz";
+//     const isAdminAuthorized = token === "xyz";
+//     if(!isAdminAuthorized){
+//         res.status(401).res.send("Authorized request");
+//     }else{
+//         next();
+//     }
+// });
+
+// app.get("/user" , (req,res) =>{   //auth router is hanlde here.
+//     res.send("user data sent");
+// })
+// app.get("/admin/getAlluser" , (req,res) =>{
+//     res.send("All data sent");
+// })
+// app.get("/admin/deleteAlluser" , (req,res) =>{
+//     res.send("delete data sent");
+// })
+
+// app.listen(3000 , ()=>{
+//     console.log("Server is successfully listening on the port 3000");
+// })
+
+
+//============================================================================
+//can use another clean way of using the auth.(Middleware)
+
+const express=require("express");
+const app = express();
+
+const {adminAuth  , UserAuth} = require("./middleware/auth");
+//Handle Auth middle for all the methods GET , POST......requests.
+app.use("/admin" , adminAuth);
+
+app.get("/user" , UserAuth, (req,res) =>{   //we have only one route for the user, so we can userAuth inside it like this.
+    res.send("user data sent");
+})
+
+app.get("/admin/getAlluser" , (req,res) =>{
+    res.send("All data sent");
+})
+app.get("/admin/deleteAlluser" , (req,res) =>{
+    res.send("delete data sent");
+})
+
+app.listen(3000 , ()=>{
+    console.log("Server is successfully listening on the port 3000");
+})
