@@ -7,3 +7,4 @@ differ bet package.json and package-lock.json
 
 
 . jS object and JSON object(difference)--why both them are used, when we want to use.
+- User.findOne() with the duplicate emal Id . which object will retured, what isnteh reason.
