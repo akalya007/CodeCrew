@@ -19,3 +19,5 @@ differ bet package.json and package-lock.json
 - create the custom validation function for the gender.
 -improve the DB schema -pu all the appropriate validation on each field in schema.
 - Add the timestamps to the schema.
+-DATA SANITIZATION-Add api valudation foe each field.
+-explore validator library functions for passwoed , email , photoUrl.

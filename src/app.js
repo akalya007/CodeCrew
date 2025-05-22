@@ -22,7 +22,7 @@ app.post("/signup" , async(req, res)=>{
       await user.save();   //most of the mongoose function returns promise. so use async and await.
       res.send("User added successfully");
     }catch(err){
-        res.status(400).send("There is the err" , + err.message);
+        res.status(400).send("There is the err" + err.message);
     }
   
 });
@@ -67,13 +67,25 @@ app.delete("/user" , async(req ,res)=>{
 })
 
 //update the data of the user
-app.patch("/user" , async(req , res)=>{
+app.patch("/user/:userId" , async(req , res)=>{    //it should not allow to update the random.
     //first read from the request
-    const userId = req.body.userId;
+    const userId = req.params?.userId;
     const data=req.body;   //data contains everything inoside the body-
     console.log(data)
+
     try{
-    const user= await User.findByIdAndUpdate({_id: userId} , data , {
+    const ALLOW_UPDATED =[         //checking each and every data is allowed to update or not.
+        "userId","photoUrl" , "about" , "gender" , "age", "skills"];   //we should not allow every data to be changed.
+
+     const isUpdateAllowed = Object.keys(data).every((k) =>       
+            ALLOW_UPDATED.includes(k));
+     if(!isUpdateAllowed){
+                throw new Error("update not allowed ");
+        }
+        if(data?.skills.length > 10){
+            throw new Error("Skills cannot be more than 10");
+        }
+     const user= await User.findByIdAndUpdate({_id: userId} , data , {
         returnDocument : "before",
         runValidators: true,
     });   //it will ignore the userId in the data, because userId is not present in the schema.apat from the schema, it will be ignore.
@@ -84,11 +96,11 @@ app.patch("/user" , async(req , res)=>{
        res.send("User updated successfully")
     }
     }catch(err){
-        res.status(400).send("UPDATED FAILED" + err.message);
+        res.status(400).send("UPDATED FAILED : " + err.message);
     }
-})
+});
 
-//updating the data by the reference.
+//updating the data by the reference(email).
 app.patch("/userbyemail" ,async (req,res)=>{
     //first read the data.
     const email=req.body.emailId;
