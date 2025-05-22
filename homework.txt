@@ -4,3 +4,6 @@ differ bet package.json and package-lock.json
 - how thw express basically handle the middleware.
 -need of the middleware, why do we need it.
 - differ between app.use and app.all in exprss
+
+
+. jS object and JSON object(difference)--why both them are used, when we want to use.

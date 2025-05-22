@@ -446,20 +446,20 @@
 //DATABASE SCHEMA
 
 
-const express=require("express");
-const app = express();
+// const express=require("express");
+// const app = express();
 
-const connectDB = require("./config/database");
+// const connectDB = require("./config/database");
 
 
-connectDB()       //hence it is the promise, we were handling it.
-.then(()=>{
-    console.log("Database connection extablished......");
-    app.listen(3000 , ()=>{
-    console.log("Server is successfully listening on the port 3000...");
-});
-})
-.catch((err)=>{
-    console.log("Database cannot be connected!");
-})
+// connectDB()       //hence it is the promise, we were handling it.
+// .then(()=>{
+//     console.log("Database connection extablished......");
+//     app.listen(3000 , ()=>{
+//     console.log("Server is successfully listening on the port 3000...");
+// });
+// })
+// .catch((err)=>{
+//     console.log("Database cannot be connected!");
+// })
 

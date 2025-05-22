@@ -6,3 +6,6 @@ episode5
 -handling muliple route handlers. playing with the code/\.
 -next()
 -next function and error along with the res.send().
+
+
+  //"main": "index.js",
