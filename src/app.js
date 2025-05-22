@@ -73,15 +73,18 @@ app.patch("/user" , async(req , res)=>{
     const data=req.body;   //data contains everything inoside the body-
     console.log(data)
     try{
-    const user= await User.findByIdAndUpdate({_id: userId} , data , {returnDocument : "before"});   //it will ignore the userId in the data, because userId is not present in the schema.apat from the schema, it will be ignore.
+    const user= await User.findByIdAndUpdate({_id: userId} , data , {
+        returnDocument : "before",
+        runValidators: true,
+    });   //it will ignore the userId in the data, because userId is not present in the schema.apat from the schema, it will be ignore.
    
     if(user.length ==0){
         res.status(404).send("User not found");
     }else{
        res.send("User updated successfully")
     }
-    }catch{
-        res.status(400).send("something went wrong");
+    }catch(err){
+        res.status(400).send("UPDATED FAILED" + err.message);
     }
 })
 

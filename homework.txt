@@ -13,3 +13,9 @@ differ bet package.json and package-lock.json
 -Explore the mongoose documnetation for thr model methods.-
 -what are the options in the model methods.
 -API - update the user with reference to emai id.
+
+
+- explore the schema options deo the documnetation-add required,unique , lowercase, min , max , trim,Add defaukt
+- create the custom validation function for the gender.
+-improve the DB schema -pu all the appropriate validation on each field in schema.
+- Add the timestamps to the schema.
