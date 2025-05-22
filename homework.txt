@@ -8,3 +8,8 @@ differ bet package.json and package-lock.json
 
 . jS object and JSON object(difference)--why both them are used, when we want to use.
 - User.findOne() with the duplicate emal Id . which object will retured, what isnteh reason.
+
+-difference between patch and the put.
+-Explore the mongoose documnetation for thr model methods.-
+-what are the options in the model methods.
+-API - update the user with reference to emai id.

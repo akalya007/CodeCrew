@@ -29,6 +29,7 @@ app.post("/signup" , async(req, res)=>{
 
 //to get the user by their email.
 app.get("/getuser" , async(req, res)=>{
+        //first read from the request
     const userEmail=req.body.emailId;
     try{
     const users=await User.find({emailId : userEmail});
@@ -47,6 +48,56 @@ app.get("/feed" , async (req, res) =>{
     try{
       const users = await User.find({});
       res.send(users);
+    }catch{
+        res.status(400).send("something went wrong");
+    }
+})
+
+//delete the userby ID
+app.delete("/user" , async(req ,res)=>{
+    const userId = req.body.userId;
+    try{
+        //const user = await User.findByIdAndDelete({ _id:userId}) 
+     const user = await User.findByIdAndDelete(userId)   //it is te shorthand for ({_id : id})
+    res.send("user Deleted successfully");
+    }
+   catch{
+        res.status(400).send("something went wrong");
+    }
+})
+
+//update the data of the user
+app.patch("/user" , async(req , res)=>{
+    //first read from the request
+    const userId = req.body.userId;
+    const data=req.body;   //data contains everything inoside the body-
+    console.log(data)
+    try{
+    const user= await User.findByIdAndUpdate({_id: userId} , data , {returnDocument : "before"});   //it will ignore the userId in the data, because userId is not present in the schema.apat from the schema, it will be ignore.
+   
+    if(user.length ==0){
+        res.status(404).send("User not found");
+    }else{
+       res.send("User updated successfully")
+    }
+    }catch{
+        res.status(400).send("something went wrong");
+    }
+})
+
+//updating the data by the reference.
+app.patch("/userbyemail" ,async (req,res)=>{
+    //first read the data.
+    const email=req.body.emailId;
+    const data=req.body;
+   try{
+       const user = await User.findOneAndUpdate({emailId:email} ,data);
+   
+    if(user.length ==0){
+        res.status(404).send("User not found");
+    }else{
+       res.send("User updated successfully")
+    }
     }catch{
         res.status(400).send("something went wrong");
     }
