@@ -21,3 +21,4 @@ differ bet package.json and package-lock.json
 - Add the timestamps to the schema.
 -DATA SANITIZATION-Add api valudation foe each field.
 -explore validator library functions for passwoed , email , photoUrl.
+-NEVER TRUST REQUEST BODY/
