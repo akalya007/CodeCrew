@@ -22,3 +22,6 @@ differ bet package.json and package-lock.json
 -DATA SANITIZATION-Add api valudation foe each field.
 -explore validator library functions for passwoed , email , photoUrl.
 -NEVER TRUST REQUEST BODY/
+
+
+- why the same error fro boty the email and password incorrect.

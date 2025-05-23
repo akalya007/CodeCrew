@@ -3,8 +3,11 @@ const express=require("express");
 const app = express();
 const connectDB = require("./config/database");
 
+
 const User = require("./model/user");
  app.use(express.json())  //this is the middleware , that convert the json object to the javasript object.(hence it is apply for all the routes).//without the middeware , it will be undefined.
+const { ValidSignUpData } = require("./utils/validation");
+const bcrypt=require("bcrypt");
 
 app.post("/signup" , async(req, res)=>{
     // const userObj = {
@@ -17,15 +20,55 @@ app.post("/signup" , async(req, res)=>{
     // const user = new User(userObj);
     //another way
       
-    const user = new User(req.body);
-    try{
+   //the flow of the program should be , first validation of the data.
+  //sometime we create the helper/utility fun to validate the data.
+  try{
+  ValidSignUpData(req);   //add it inside the try, if any error occurs,then catch block will catch it.
+
+   const {firstName , lastName , emailId ,  password} = req.body;   //extracting the fields.
+
+   //Encrpt the password.
+   const passwordHash = await bcrypt.hash(password , 10); //it returns promise  //bcrypt.hash(plaintext , saltRounds)   // VERIFY NOTES--
+   console.log(passwordHash);
+
+   //then you store in the database
+    //const user = new User(req.body);    //it is not the good way.
+    const user = new User({    //we explicityly mention.
+        firstName ,
+         lastName ,
+         emailId ,
+         password : passwordHash,
+    })
+    
       await user.save();   //most of the mongoose function returns promise. so use async and await.
       res.send("User added successfully");
     }catch(err){
-        res.status(400).send("There is the err" + err.message);
+        res.status(400).send("There is the err :" + err.message);
     }
   
 });
+
+//login
+app.post("/login" , async(req , res)=>{
+ try{
+const {emailId,password} = req.body;
+
+ const user = await User.findOne({emailId: emailId})    //first enail should be verified before the password.
+if(!user){          
+    throw new Error("Invalid credentails ");
+}     //if the email is present then check the password.
+
+const isPassword = await bcrypt.compare(password , user.password);
+if(isPassword){
+res.send("Login Successfully");
+}else{
+    throw new Error("Invalid credentails")
+}
+    }catch(err){
+        res.status(400).send("There is the err :" + err.message);
+    }
+}) 
+
 
 //to get the user by their email.
 app.get("/getuser" , async(req, res)=>{
