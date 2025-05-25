@@ -25,3 +25,16 @@ differ bet package.json and package-lock.json
 
 
 - why the same error fro boty the email and password incorrect.
+
+
+episode10
+-install cookie-parser
+-just send a dummy cookie to user
+-create GET /profile API and check if you get the cookie back
+- install jsonwebtoken
+-In login API , after the email and the password validation , create the JWT token and send it to user- read the cooies inside your profile API and find the logged in user.
+
+-userAuth middleware
+-Add it in the profile APi and new sentAconnectionRequest API 
+- set the expiry of JWT token and cookie foe 7days.
+
