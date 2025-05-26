@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 const validator = require("validator");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+
+
+
+
 //creating the userSchema
 
 const userSchema = mongoose.Schema({
@@ -74,8 +81,31 @@ const userSchema = mongoose.Schema({
     timestamps:true    //it automattically adds the timestamp to all the user who registered.
 });
 
-//creating the model.
 
+userSchema.methods.getJWT = async function(){    //this is the good way of getting the jwt token by the schema methods, and we can also reuse it.
+    const user = this;    //this keyword does not wirk in the arrow function.
+
+ const token = await jwt.sign({_id: user._id} , "codecrew@123" , 
+    { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId
+
+return token;
+}
+
+
+//validating the password.
+userSchema.methods.validatePassword = async function(passwordInputByUser){
+    const user = this;
+const passwordHash = user.password;
+const isPasswordValid = await bcrypt.compare(
+    passwordInputByUser,
+    passwordHash
+    );
+
+    return isPasswordValid;
+};
+
+
+//creating the model.
 const User= mongoose.model("User" , userSchema);
 module.exports = User;  
 

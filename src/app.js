@@ -67,12 +67,14 @@ if(!user){
     throw new Error("Invalid credentails ");
 }     //if the email is present then check the password.
 
-const isPasswordValid = await bcrypt.compare(password , user.password);
+const isPasswordValid = await user.validatePassword(password)
 if(isPasswordValid){    //If it  is valid only, It will generate the token.
   
 //create JWT token
- const token = await jwt.sign({_id: user._id} , "codecrew@123" , { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId
- console.log(token);   //this token is also has the secret info about whuo is loged in . 
+ ////const token = await jwt.sign({_id: user._id} , "codecrew@123" , { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId --good practice of using the helper functions.
+ //console.log(token);   //this token is also has the secret info about whuo is loged in . 
+const token = await user.getJWT();
+
 
   //Add the token to the cookie abd sebd the response back to the user.
 res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )});    //cookie is given by express.
