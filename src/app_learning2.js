@@ -198,4 +198,4 @@ connectDB()       //hence it is the promise, we were handling it.
 })
 .catch((err)=>{
     console.log("Database cannot be connected!");
-})
+})  

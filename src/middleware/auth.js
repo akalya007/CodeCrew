@@ -45,7 +45,7 @@ const {_id} = decodeObj;
   if(!user){
     throw new Error("User not found");
   }
-  req.user = user;
+  req.user = user;   //This "user" will get me teh user Details of teh loggedIn User.
   next();    //if the token is valid, then the user is found , we just called next() 
 }
 catch(err){

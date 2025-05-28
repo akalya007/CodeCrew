@@ -47,7 +47,7 @@ authRouter.post("/signup" , async(req, res)=>{
   
 });
 
-//login
+
 authRouter.post("/login" , async(req , res)=>{
  try{
 const {emailId,password} = req.body;
@@ -76,4 +76,12 @@ res.send("Login Successfully");
         res.status(400).send("There is the err :" + err.message);
     }
 }) 
+
+//the user is hitting the logout api, it does matter that the user is login ot not, just set the cookie token to null.
+authRouter.post("/logout" , async(req, res)=>{
+    res.cookie("token" , null, {expires: new Date(Date.now())});
+    res.send("Logout successfull!!!...");
+})
+
+
 module.exports=authRouter;
