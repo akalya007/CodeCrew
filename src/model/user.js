@@ -4,11 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
-
-
-
 //creating the userSchema
-
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -53,11 +49,16 @@ const userSchema = mongoose.Schema({
     }, 
     gender: {      //adding the "custom validation" to the user schema
         type: String,
-        validate(value){        //thus function only run if new user/data is added, it will not called with the exciting data.--so see the documentation, in the specific MODEL api.
-          if(!["male" , "female" , "other"].includes(value)){   
-                throw new Error("Gender data is not valid");
-          }
+        enum : {
+            values : ["male" , "female" , "other"],
+            message : `{VALUE} Gender data is not valid `
         },
+
+        // validate(value){        //thus function only run if new user/data is added, it will not called with the exciting data.--so see the documentation, in the specific MODEL api.
+        //   if(!["male" , "female" , "other"].includes(value)){      //this is teh custom validation
+        //         throw new Error("Gender data is not valid");
+        //   }
+        // },
     },
     photoUrl: {
         type: String,
@@ -82,7 +83,7 @@ const userSchema = mongoose.Schema({
 });
 
 
-userSchema.methods.getJWT = async function(){    //this is the good way of getting the jwt token by the schema methods, and we can also reuse it.
+userSchema.methods.getJWT = async function(){     //this is the good way of getting the jwt token by the schema methods, and we can also reuse it.
     const user = this;    //this keyword does not wirk in the arrow function.
 
  const token = await jwt.sign({_id: user._id} , "codecrew@123" , 

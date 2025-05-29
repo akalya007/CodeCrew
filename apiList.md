@@ -10,7 +10,8 @@
 ## profileRouter
 - GET /profile/view
 - PATCH /profile/edit
-- PATCH /profile/password
+- PATCH /profile/password    //this is the forgot password,--It will take teh existing password and the new password , it will check whether the is logged in , use the bcrypt.compare  to check the existing password correct or not , and check new password is strong enough or not 
+- 
 
 ## connectionRequestRouter
 - POST /request/send/interest/:userId

@@ -38,3 +38,7 @@ episode10
 -Add it in the profile APi and new sentAconnectionRequest API 
 - set the expiry of JWT token and cookie foe 7days.
 
+
+-why should not crete the lot of indexes to the db.
+- why do we need index in DB?
+-whta is the advantage , disadvantage of creating Index

@@ -21,7 +21,15 @@ const validateEditProfileData =(req)=>{
 
     return isEditAllowed;
 }
+
+const validateCurrentPassword = async (loggedInUser, currentPassword) => {
+    const isValid = await loggedInUser.validatePassword(currentPassword);
+    
+    return isValid;
+};
+
 module.exports= {
     ValidSignUpData,
-    validateEditProfileData
+    validateEditProfileData,
+    validateCurrentPassword
 };
