@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const connectionRequestSchema = new mongoose.Schema({
 fromUserId :{
 type : mongoose.Types.ObjectId,
+
 required:true
 },
 toUserId :{
@@ -16,7 +17,7 @@ status :{
     type : String,
     required:true,
     enum : {        
-        values :["ignored" , "interested", "accepetd" , "rejected"],   //enum is use to define a field with a restricted set of possible values. when the value outside the defined enum , then the mongoose will throw a validation error.
+        values :["ignored" , "interested", "accepted" , "rejected"],   //enum is use to define a field with a restricted set of possible values. when the value outside the defined enum , then the mongoose will throw a validation error.
         message : `{VALUE} is Incorrect status type `
     }
 }

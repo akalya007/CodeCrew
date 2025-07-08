@@ -4,7 +4,7 @@ const requestRouter  = express.Router();
 const {UserAuth}= require("../middleware/auth");
 const ConnectionRequest = require("../model/connectionrequest");
 const User = require('../model/user');
-
+                              //UserAuth--will check whether the token is coming valid or not.whethe rthe Cokkie has the token or not, and the Token is valid.thn findout the information about the logged-in user.
 requestRouter.post("/request/sent/:status/:toUserId" , UserAuth , async(req , res) =>{
 
 try{
@@ -54,6 +54,44 @@ res.json({
   }
 
 })
+       
+//CORNER CASE:
+// Akal-->Murugar
+// 1. Murugar should logged In ---touserId should be logged In.
+//2.  onlu murugar should accedpt or rejected, no other can give thestatus
+//3. we can accept or rejected , only the existing status should be interested.
+//4.request Id sgould be valid.   
+requestRouter.post("/request/review/:status/:requestId",UserAuth,
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user;
+      const { status, requestId } = req.params;
 
+      const allowedStatus = ["accepted", "rejected"];
+      if (!allowedStatus.includes(status)) {
+        return res.status(400).json({ messaage: "Status not allowed!" });
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id: requestId,   //_id matches requestId (a specific request's ID),
+        toUserId: loggedInUser._id,   //to user should br logged In user
+        status: "interested",
+      });
+      if (!connectionRequest) {
+        return res
+          .status(404)
+          .json({ message: "Connection request not found" });
+      }
+
+      connectionRequest.status = status;
+
+      const data = await connectionRequest.save();
+
+      res.json({ message: "Connection request " + status, data });
+    } catch (err) {
+      res.status(400).send("ERROR: " + err.message);
+    }
+  }
+);
 
 module.exports=requestRouter;

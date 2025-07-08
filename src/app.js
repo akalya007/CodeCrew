@@ -5,8 +5,12 @@ const express=require("express");
 const app = express();
 const connectDB = require("./config/database");   //for connecting the database.
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
-    
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true,
+}));
 app.use(express.json())  //this is the middleware , that convert the json object to the javasript object.(hence it is apply for all the routes).//without the middeware , it will be undefined.
 app.use(cookieParser());   //to read the cookie
 
