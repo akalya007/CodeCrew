@@ -28,6 +28,7 @@
 - POST /request/review/:status/:requestId  [for accepted or rejected]
 
 ## userRouter
+GET /user/requests/received
 - GET /user/connections---THIS API WILL GIVES ALL THE CONNECTION OF THE USER
 - GET /user/requests----THIS API WILL GIVES ALL THE REQUEST OF THE USER
 - GET /user/feed - Gets you the profile of other users on platform

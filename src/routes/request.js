@@ -3,7 +3,7 @@ const requestRouter  = express.Router();
 
 const {UserAuth}= require("../middleware/auth");
 const ConnectionRequest = require("../model/connectionrequest");
-const User = require('../model/user');
+const User = require("../model/user");
                               //UserAuth--will check whether the token is coming valid or not.whethe rthe Cokkie has the token or not, and the Token is valid.thn findout the information about the logged-in user.
 requestRouter.post("/request/sent/:status/:toUserId" , UserAuth , async(req , res) =>{
 

@@ -19,12 +19,13 @@ app.use(cookieParser());   //to read the cookie
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
+const userRouter = require("./routes/user");
 
 
 app.use("/" , authRouter);   //whenever we get the route i.e all the middleware , all the request handlers , and send the response, from wherever it gets the first. expresjs try to go one by one 
 app.use("/" , profileRouter);
 app.use("/" , requestRouter);
-
+app.use("/", userRouter);
 
 connectDB()       //hence it is the promise, we were handling it.
 .then(()=>{
