@@ -3,6 +3,7 @@ const userRouter = express.Router();
 
 const {UserAuth}= require("../middleware/auth");
 const ConnectionRequest = require("../model/connectionrequest");
+const User = require("../model/user");
 
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
 
@@ -53,5 +54,48 @@ userRouter.get("/user/connections", UserAuth, async (req, res) => {
     res.status(400).send({ message: err.message });
   }
 });
+
+//user should see all the suer except
+//1. his own card , 
+//2.his conncetion
+//3.ignored people
+//4.already sent the connection
+userRouter.get("/feed", UserAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+
+    const page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    limit = limit > 50 ? 50 : limit;
+    const skip = (page - 1) * limit;
+
+    //find all connection request ( sent + received)
+    const connectionRequests = await ConnectionRequest.find({
+      $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
+    }).select("fromUserId  toUserId");
+
+    //besause, they are already in their...., whos i dont wnat to sent in the feed.
+    const hideUsersFromFeed = new Set();     //set in the datastructure.
+    connectionRequests.forEach((req) => {
+      hideUsersFromFeed.add(req.fromUserId.toString());
+      hideUsersFromFeed.add(req.toUserId.toString());
+    });
+
+    const users = await User.find({
+      $and: [
+        { _id: { $nin: Array.from(hideUsersFromFeed) } },   //finding the ids , whose not present in the hidedUserFeed.--converting the set into Array.[nin--not-in the array.]
+        { _id: { $ne: loggedInUser._id } },  //also dont want my own profile.[ne---not equalto]
+      ],
+    })
+      .select(USER_SAFE_DATA)  //send only the safe data.
+      .skip(skip)
+      .limit(limit);
+
+    res.json({ data: users });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 
 module.exports = userRouter;
