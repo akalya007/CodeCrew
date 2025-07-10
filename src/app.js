@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"http://localhost:5174",   //vitelisting the domain name.
     credentials:true,
 }));
 app.use(express.json())  //this is the middleware , that convert the json object to the javasript object.(hence it is apply for all the routes).//without the middeware , it will be undefined.

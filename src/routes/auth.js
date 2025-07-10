@@ -39,8 +39,11 @@ authRouter.post("/signup" , async(req, res)=>{
          password : passwordHash,
     })
     
-      await user.save();   //most of the mongoose function returns promise. so use async and await.
-      res.send("User added successfully");
+      const savedUser = await user.save();   //most of the mongoose function returns promise. so use async and await.
+      const token = await savedUser.getJWT();
+      
+      res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )}); 
+      res.json({message : "User Added Successfully!" , data: savedUser});
     }catch(err){
         res.status(400).send("There is the err :" + err.message);
     }
