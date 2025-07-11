@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
 await mongoose.connect(
-   //"mongodb+srv://akalya:akalya@cluster0.3oea8tv.mongodb.net/Codecrew"
-// "mongodb+srv://akalya:akalya@cluster0.3oea8tv.mongodb.net/DevConnect"
 process.env.DATABASE_CONNECTION_STRING
 );
 }; 
