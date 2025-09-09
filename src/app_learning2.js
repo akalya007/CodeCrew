@@ -123,7 +123,6 @@ app.get("/profile", UserAuth, async(req,res)=>{
 
 })
 
-
 //delete the userby ID
 app.delete("/user" , async(req ,res)=>{
     const userId = req.body.userId; //first read from the request

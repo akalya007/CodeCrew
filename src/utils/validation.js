@@ -33,3 +33,12 @@ module.exports= {
     validateEditProfileData,
     validateCurrentPassword
 };
+
+
+/**
+ *  Why we use Object.keys(req.body)
+ * =================================
+Object.keys(req.body) converts the object’s property names into an array.
+
+Then .every() can loop through those keys to check if they’re in allowedEditFields.
+ */

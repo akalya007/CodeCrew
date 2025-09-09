@@ -1,9 +1,9 @@
 
 //1.creating the server
-// const express = require("express");
+// const express = require("express");   //express is a popular web framework for Node.js that makes it easier to build APIs and web servers.
 
 // const app= express();   //creating the application ----creating the server--then want to keep listens on the port.
-
+                           
 // app.listen(3000 , ()=>{
 //     console.log("server is Successfully listening on port 3000 ")
 // });
@@ -86,12 +86,12 @@
 // });
 
 
-//here we can put as many b's after "b".
+// // here we can put as many b's after "b".
 // app.get("/ab+c",(req , res) => {   
 //   res.send({firstName: "Akalya" , lastName: "dhanapal"});
 // })
 
-//here we can write anything between "ab---cd"--is ab--cd is missing it will not work.
+// // here we can write anything between "ab---cd"--is ab--cd is missing it will not work.
 // app.get("/ab*cd",(req , res) => {   
 //    res.send({firstName: "Akalya" , lastName: "dhanapal"});
 // })
@@ -127,7 +127,7 @@
 
 // //if in the path 'a' is present , then it will work.--it will work in the url present with "cab"--here the a is present.
 // app.get(/a/, (req, res) => {
-//   res.send({ firstName: "Akalya", lastName: "dhanapal" });
+// //   res.send({ firstName: "Akalya", lastName: "dhanapal" });
 // });
 
 // app.get(/.*fly$/, (req, res) => {
@@ -231,7 +231,7 @@
 //when the request is sent , it comes into the app.use and it execute line by line .
 
 //=====================================================================================================
-// //another case--playing with route handling.
+//another case--playing with route handling.
 
 // const express =  require("express");
 // const app = express();
@@ -244,7 +244,7 @@
 // },
 //   (req,res , next)=>{
 //    console.log("Route handling 2");
-//   // res.send(" 2nd Response");
+//   //res.send(" 2nd Response");
 //    next();
 //    },
 //     (req,res , next)=>{
@@ -394,7 +394,7 @@
 
 // const express=require("express");
 // const app = express();
-                                           //order maters....use the wild card error handling always to the end .
+//                                            //order maters....use the wild card error handling always to the end .
 // app.use("/" , (err , req , res , next)=>{ //make sure , the error should always comes in the front , next at the last(this is te formate)--but using try-catch mathod is the best way.
 // if(err){
 //     console.log("first");

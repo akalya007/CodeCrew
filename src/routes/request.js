@@ -25,8 +25,6 @@ if(!toUser){
 }
 
 
-
-
 //eg -Akal is sending connection to messi-api should not allow to sent connection second time , and in reverse it should not alloed to make connection fron messi to Akal.
 const existingConnectionRequest = await ConnectionRequest.findOne({   //when there is the millions of data , query will be slow, so writing the compound Index
     $or : [        //using OR logic
@@ -78,9 +76,7 @@ requestRouter.post("/request/review/:status/:requestId",UserAuth,
         status: "interested",
       });
       if (!connectionRequest) {
-        return res
-          .status(404)
-          .json({ message: "Connection request not found" });
+        return res.status(404) .json({ message: "Connection request not found" });
       }
 
       connectionRequest.status = status;

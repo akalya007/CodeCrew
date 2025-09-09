@@ -39,10 +39,10 @@ authRouter.post("/signup" , async(req, res)=>{
          password : passwordHash,
     })
     
-      const savedUser = await user.save();   //most of the mongoose function returns promise. so use async and await.
-      const token = await savedUser.getJWT();
+      const savedUser = await user.save();   //most of the mongoose function returns promise. so use async and await.//Saves the user document into MongoDB.
+      const token = await savedUser.getJWT();  // Generating JWT Token
       
-      res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )}); 
+      res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )}); //Setting Cookie with JWT,Cookies make it easier for the client to send the token automatically in future requests.
       res.json({message : "User Added Successfully!" , data: savedUser});
     }catch(err){
         res.status(400).send("There is the err :" + err.message);
@@ -69,7 +69,7 @@ if(isPasswordValid){    //If it  is valid only, It will generate the token.
 const token = await user.getJWT();
 
 
-  //Add the token to the cookie abd sebd the response back to the user.
+  //Add the token to the cookie and sebd the response back to the user.
 res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )});    //cookie is given by express.
 // res.send("Login Successfully");
 res.send(user);
@@ -89,3 +89,55 @@ authRouter.post("/logout" , async(req, res)=>{
 
 
 module.exports=authRouter;
+
+/**
+ * userSchema.methods → -> lets you add custom functions to all documents (instances) created from the schema.
+ */
+
+
+//NOTE--😀
+/**
+ * . What’s the token?
+ * =====================
+This token is a JWT (JSON Web Token).
+
+It contains encrypted data (like the user’s _id) that proves the user is authenticated.
+
+The server can verify it without storing anything in memory (stateless authentication).
+
+2. Why put it in a cookie?
+==========================
+If you just send the token in the login API response, the client (React app, browser) would have to store it manually — maybe in localStorage or sessionStorage.
+But that comes with:
+
+More manual handling in JavaScript.
+
+Security issues (localStorage can be accessed by JS, making it vulnerable to XSS attacks).
+
+Cookies, on the other hand:
+
+Are automatically sent to the server with every HTTP request (GET, POST, etc.) to the same domain.
+
+Work with res.cookie() in Express to store the token securely in the browser.
+
+Can be made HttpOnly so JavaScript can’t read them (reducing XSS risks).
+
+3. How it works in the next requests
+=========================================
+After login:
+
+Server sends a Set-Cookie header with the JWT.
+
+Browser stores that cookie.
+
+On any API call to your server, the browser automatically attaches that cookie in the request headers.
+
+Your server reads the cookie, verifies the JWT, and knows who the user is.
+
+4. Why it’s better for authentication
+=========================================
+✅ No need for the client to attach token manually.
+✅ No storing token in localStorage or sessionStorage.
+✅ Possible to set secure flags (HttpOnly, Secure, SameSite).
+✅ Works well with server-side rendering and APIs.
+ */

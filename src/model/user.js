@@ -86,8 +86,7 @@ const userSchema = mongoose.Schema({
 userSchema.methods.getJWT = async function(){     //this is the good way of getting the jwt token by the schema methods, and we can also reuse it.
     const user = this;    //this keyword does not wirk in the arrow function.
 
- const token = await jwt.sign({_id: user._id} , "codecrew@123" , 
-    { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId
+ const token = await jwt.sign({_id: user._id} , "codecrew@123",{ expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId
 
 return token;
 }
