@@ -119,7 +119,7 @@ const port = process.env.PORT || 3000;
 console.log("Port set to:", port);  // for debugging
 
 app.use(cors({
-    origin:"https://connecthub-client.onrender.com",
+    origin:"http://localhost:5173",
     credentials:true,
 }));
 app.use(express.json());
