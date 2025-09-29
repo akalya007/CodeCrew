@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
 await mongoose.connect(
-process.env.DATABASE_CONNECTION_STRING
+// process.env.DATABASE_CONNECTION_STRING
+"mongodb+srv://root:root@cluster0.awmicgy.mongodb.net/connecthub"
 );
 }; 
 
