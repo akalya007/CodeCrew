@@ -114,7 +114,7 @@ const cors = require("cors");
 const http = require("http");
 
 require('dotenv').config();
-
+console.log("🔍 ENV CHECK (from app.js):", process.env.DATABASE_CONNECTION_STRING);
 const port = process.env.PORT || 3000;
 console.log("Port set to:", port);  // for debugging
 
