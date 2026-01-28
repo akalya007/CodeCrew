@@ -13,7 +13,8 @@ const getSecretRoomId = (userId, targetUserId) => {
 const initializeSocket = (server) => {
   const io = socket(server, {   //we need this server to initialize the io.
     cors: {            //to handle the cors issues , while communicating to the websockets.
-      origin: "http://localhost:5173",
+      // origin: "http://localhost:5173",
+          origin:"https://codecrew-web.onrender.com",
     },
   });
 
