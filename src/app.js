@@ -119,7 +119,8 @@ const port = process.env.PORT || 3000;
 console.log("Port set to:", port);  // for debugging
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    // origin:"http://localhost:5173",
+        origin:"https://codecrew-web.onrender.com",
     credentials:true,
 }));
 app.use(express.json());
