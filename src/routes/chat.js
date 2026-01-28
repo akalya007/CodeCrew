@@ -47,7 +47,8 @@ const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
       // origin: "http://localhost:3000",
-          origin:"https://codecrew-web.onrender.com",
+          // origin:"https://codecrew-web.onrender.com",
+      origin:"https://codecrew-frontend-rsug.onrender.com",
     },
   });
 
