@@ -13,7 +13,7 @@ const getSecretRoomId = (userId, targetUserId) => {    //to have the room Id in 
 const initializeSocket = (server) => {
   const io = socket(server, {   //we need this server to initialize the io./or for the configiuration of the socket.io
     cors: {            //to handle the cors issues , while communicating to the websockets.
-      origin: "http://localhost:5173",
+      origin: "https://connecthub-ochre.vercel.app",
     },
   });
 
