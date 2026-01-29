@@ -46,7 +46,7 @@ const getSecretRoomId = (userId, targetUserId) => {
 const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://connecthub-web.onrender.com",
           // origin:"https://codecrew-web.onrender.com",
       // origin:"https://connecthub-ochre.vercel.app",
     },
