@@ -121,7 +121,7 @@ console.log("Port set to:", port);  // for debugging
 app.use(cors({
     // origin:"http://localhost:5173",
         // origin:"https://codecrew-web.onrender.com",
-    origin:"https://connecthub-web.onrender.com",
+    origin:"https://connecthub-ochre.vercel.app",
     
     credentials:true,
 }));
