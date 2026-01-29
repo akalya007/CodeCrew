@@ -48,7 +48,7 @@ const initializeSocket = (server) => {
     cors: {
       // origin: "http://localhost:3000",
           // origin:"https://codecrew-web.onrender.com",
-      origin:"https://connecthub-web.onrender.com",
+      origin:"https://connecthub-ochre.vercel.app",
     },
   });
 
