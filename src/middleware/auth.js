@@ -39,7 +39,7 @@ if(!token){
 
 //2.validate the token 
 //const decodeObj = jwt.verify(token, process.env.JWT_SECRET);
-const decodeObj = jwt.verify(token, "codecrew@123");
+const decodeObj = jwt.verify(token, process.env.JWT_SECRET);
 
 const {_id} = decodeObj;
 

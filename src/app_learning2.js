@@ -73,7 +73,13 @@ if(isPasswordValid){    //If it  is valid only, It will generate the token.
  console.log(token);   //this token is also has the secret info about whuo is loged in . 
 
   //Add the token to the cookie abd sebd the response back to the user.
-res.cookie("token" , token);    //cookie is given by express.
+// res.cookie("token" , token);    //cookie is given by express.
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // REQUIRED on HTTPS (Render/Vercel)
+  sameSite: "none",    // REQUIRED for cross-domain
+});
+
 res.send("Login Successfully");
 }else{
     throw new Error("Invalid credentails")
