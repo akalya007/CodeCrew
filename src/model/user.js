@@ -22,12 +22,13 @@ const userSchema = mongoose.Schema({
           required:true,
           unique:true , // the emailId is unique
           trim:true,    //wmail should be trim before saving it , it should not contain any space in the email. to while space shoild be added.
-          validate(value){
+          validate(value){       //Loads the validator library (popular npm package) which provides helper functions like isEmail, isURL, isStrongPassword
             if(!validator.isEmail(value)){
                 throw new Error("Invalid email address : " + value);
             }
           },
         },
+
     password: {
         type: String,
           required:true,
@@ -82,7 +83,7 @@ const userSchema = mongoose.Schema({
     timestamps:true    //it automattically adds the timestamp to all the user who registered.
 });
 
-
+ 
 userSchema.methods.getJWT = async function(){     //this is the good way of getting the jwt token by the schema methods, and we can also reuse it.
     const user = this;    //this keyword does not wirk in the arrow function.
 

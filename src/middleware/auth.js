@@ -20,13 +20,15 @@
 //     }
 // };
 
-
+// UserAuth → Middleware that authenticates the user before the route executes. It usually attaches the logged-in user to req.user.
+  //It uses a middleware UserAuth to make sure only logged-in users can access it.
+// The function is asynchronous since it interacts with MongoDB.
 
 const jwt = require("jsonwebtoken");
 const User=require("../model/user");
 
-
-//we have to give the authorization for every api that has been called,
+//Authenticated the user.
+//we have to give the authentiacation for every api that has been called,
 const UserAuth =async  (req , res , next)=>{
  try{
 //1.read the token from the cookies

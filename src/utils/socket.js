@@ -3,26 +3,27 @@ const crypto = require("crypto");
 const { Chat } = require("../model/chat");
 //const ConnectionRequest = require("../model/connectionRequest");
 
-const getSecretRoomId = (userId, targetUserId) => {
+const getSecretRoomId = (userId, targetUserId) => {    //to have the room Id in the secure way
   return crypto
     .createHash("sha256")
     .update([userId, targetUserId].sort().join("$"))   //we can sort this , so that rooId of two people can be same .
-    .digest("hex");
-};
+    .digest("hex");   //This final step converts the hashed value into a readable hexadecimal string.
+};  //That’s your secret room ID — long, random-looking, and secure.
 
 const initializeSocket = (server) => {
-  const io = socket(server, {   //we need this server to initialize the io.
+  const io = socket(server, {   //we need this server to initialize the io./or for the configiuration of the socket.io
     cors: {            //to handle the cors issues , while communicating to the websockets.
       origin: "http://localhost:5173",
+      credentials: true
     },
   });
 
   //using this io , to receive the Connection.
   io.on("connection", (socket) => {     //accept the conncetion.[start listening.]
     //events.
-    socket.on("joinChat", ({ firstName, userId, targetUserId }) => {
-      const roomId = getSecretRoomId(userId, targetUserId);     //note👇--creating the room.
-      console.log(firstName + " joined Room : " + roomId);
+    socket.on("joinChat", ({ firstName, userId, targetUserId }) => {   //whenever there is the chat happens , that created inside the room.
+      const roomId = getSecretRoomId(userId, targetUserId);     //note👇--creating the room with the unique id(this is the reason where we need both the userid)..then socket.join() room.
+         console.log(firstName + " joined Room : " + roomId);
       socket.join(roomId);
     });
 
@@ -36,7 +37,7 @@ const initializeSocket = (server) => {
           // TODO: Check if userId & targetUserId are friends
 
           let chat = await Chat.findOne({
-            participants: { $all: [userId, targetUserId] },
+            participants: { $all: [userId, targetUserId] },   //all the people inside the array will be the participants.
           });
 
           if (!chat) {
@@ -52,7 +53,8 @@ const initializeSocket = (server) => {
           });
 
           await chat.save();
-          io.to(roomId).emit("messageReceived", { firstName, lastName, text });
+           //doni sended the msg in backens ,how to send the msg back to virat koli. 
+          io.to(roomId).emit("messageReceived", { firstName, lastName, text });  
         } catch (err) {
           console.log(err);
         }
@@ -69,7 +71,7 @@ module.exports = initializeSocket;
 //note 😀
 
 /**
- * when there is teh socket connection , we can create te room 
+ * when there is teh socket connection , we can create te room --room has the room id.--there will be the thounsand of participants.
  * There will be thousand of users , we dont know ,who wnat to chat with who ...
  * so , bacsically , we create the room . inside the room there will be participates
  * creating the room with the unique ID's , [userOd and the targetUserId]
@@ -77,7 +79,7 @@ module.exports = initializeSocket;
  * 
  * suppose there are 100s of user, 
  * 
- * we want to connect dhoni and the virat,we make sure , their roomID are correct.
+ * we want to connect dhoni and the virat,--we make sure their roomID are correct.
  * if virat sended the msg in room , it will sent to the dhoni---if dhoni sent the msg in the roon , it will sent to the virat.
  * 
  * 
@@ -105,6 +107,17 @@ module.exports = initializeSocket;
  * })
  * 
  *  })
+ */
+
+
+/**
+ * 1️⃣ crypto.createHash("sha256")
+
+crypto is Node.js’s built-in cryptography module.
+
+createHash("sha256") → creates a SHA-256 hash function.
+
+SHA-256 is a secure one-way hashing algorithm, meaning it converts any input into a 64-character hexadecimal string that can’t be reversed back to the original
  */
 
 

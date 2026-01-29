@@ -39,7 +39,7 @@ res.json({message :`${loggedInUser.firstName} , You profile was Updated Successf
  }
 
 
-} )
+})
 
 
 profileRouter.patch("/profile/password", UserAuth, async (req, res) => {
@@ -52,7 +52,8 @@ profileRouter.patch("/profile/password", UserAuth, async (req, res) => {
     }
 
     const loggedInUser  = req.user; // Comes from UserAuth- //This "user" will get me the user Details of the loggedIn User.
-    if(!validateCurrentPassword(loggedInUser, currentPassword)){
+    // if(!validateCurrentPassword(loggedInUser, currentPassword)){
+    if (!(await validateCurrentPassword(loggedInUser, currentPassword))) {
         throw new Error("Current password is incorrect.");
      }
     

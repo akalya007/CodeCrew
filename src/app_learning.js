@@ -32,9 +32,9 @@
 
 // const app= express();   //creating the application ----creating the server--then want to keep listens on the port.
 
-// // app.use("/hello",(req,res)=>{        //the callback function is known as the requets handler.--
-// //     res.send("Hello Akalssssss");       //--if any other router, which starts form "/helo" , this will be mathched over this--it means "localhost.3000/hello/234"--the output of this is same as "hello hello helloooo"
-// // });                                 //it starts matching the route form the top.
+// app.use("/hello",(req,res)=>{        //the callback function is known as the requets handler.--
+//     res.send("Hello Akalssssss");       //--if any other router, which starts form "/helo" , this will be mathched over this--it means "localhost.3000/hello/234"--the output of this is same as "hello hello helloooo"
+// });                                 //it starts matching the route form the top.
 // app.use("/",(req,res)=>{        //the callback function is known as the requets handler.
 //     res.send("Hello helo heloooooo");
 // });
@@ -75,7 +75,7 @@
 //====================================================================================================================
 //Advanced Routing concept
 
-// const express = require("express");
+const express = require("express");
 
 // const app= express();   
 
@@ -195,9 +195,9 @@
 // const app = express();
 
 // app.use("/user" ,(req , res) =>{ 
-//    //res.send("Router Handler 1");   //If we command this--is it is the empty route handlers , it will nothing send
+// //    res.send("Router Handler 1");   //If we command this--is it is the empty route handlers , it will nothing send
 //    console.log(" 1 Route Message");  
-//   //res.send(" 1 response");   //when we command --there will be no response. and the next route will not be called.
+//   res.send(" 1 response");   //when we command --there will be no response. and the next route will not be called.
 // },
 //   (req,res)=>{
 //    console.log("Route handling 2");
@@ -228,7 +228,7 @@
 // app.listen(3000 , ()=>{
 //     console.log("Server us successfully listening on the port 3000");
 // })
-//when the request is sent , it comes into the app.use and it execute line by line .
+// when the request is sent , it comes into the app.use and it execute line by line .
 
 //=====================================================================================================
 //another case--playing with route handling.
@@ -318,7 +318,7 @@
 // const app = express();
 
 // app.use("/user" , (req , res , next) =>{
-//     console.log("Route handler 1");   //this chain od methods are called the         middleware , it was called between the reqest handler.
+//     console.log("Route handler 1");   //this chain od methods are called the  middleware , it was called between the reqest handler.
 //     next();
 // })
 // app.use("/user" , (req , res , next) =>{
@@ -442,7 +442,6 @@
 // });
 
 //================================================================================
-
 //DATABASE SCHEMA
 
 

@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express');  //The framework used to create the server and handle HTTP requests.
 const authRouter = express.Router();  // <== Call Router()
 
 
@@ -30,7 +30,7 @@ authRouter.post("/signup" , async(req, res)=>{
    const passwordHash = await bcrypt.hash(password , 10); //it returns promise  //bcrypt.hash(plaintext , saltRounds)   // VERIFY NOTES--
    console.log(passwordHash);
 
-   //then you store in the database
+   //then you store in the database   
     //2.const user = new User(req.body);    //it is not allwoed to add that databse whatever in the req body.
     const user = new User({    //so we explicityly mention.
         firstName ,
@@ -41,9 +41,10 @@ authRouter.post("/signup" , async(req, res)=>{
     
       const savedUser = await user.save();   //most of the mongoose function returns promise. so use async and await.//Saves the user document into MongoDB.
       const token = await savedUser.getJWT();  // Generating JWT Token
-      
+      //Stateless authentication: the server doesn’t need to store session data.
       res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )}); //Setting Cookie with JWT,Cookies make it easier for the client to send the token automatically in future requests.
       res.json({message : "User Added Successfully!" , data: savedUser});
+      
     }catch(err){
         res.status(400).send("There is the err :" + err.message);
     }
@@ -61,14 +62,14 @@ if(!user){
 }     //if the email is present then check the password.
 
 const isPasswordValid = await user.validatePassword(password)
-if(isPasswordValid){    //If it  is valid only, It will generate the token.
-  
+
+if(isPasswordValid){    //If it  is valid only, It will generate the token.  
 //create JWT token
- ////const token = await jwt.sign({_id: user._id} , "codecrew@123" , { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId --good practice of using the helper functions.
+//  const token = await jwt.sign({_id: user._id} , "codecrew@123" , { expiresIn: "1d"})   // jwt.sign({keep data that need to hidden} ,"secret key")--here we hiding the userId --good practice of using the helper functions.
  //console.log(token);   //this token is also has the secret info about whuo is loged in . 
 const token = await user.getJWT();
 
-
+//setting up the cookie.
   //Add the token to the cookie and sebd the response back to the user.
 res.cookie("token" , token , {expires: new Date(Date.now() + 8*36000000 )});    //cookie is given by express.
 // res.send("Login Successfully");
@@ -109,9 +110,7 @@ The server can verify it without storing anything in memory (stateless authentic
 ==========================
 If you just send the token in the login API response, the client (React app, browser) would have to store it manually — maybe in localStorage or sessionStorage.
 But that comes with:
-
 More manual handling in JavaScript.
-
 Security issues (localStorage can be accessed by JS, making it vulnerable to XSS attacks).
 
 Cookies, on the other hand:
@@ -120,7 +119,7 @@ Are automatically sent to the server with every HTTP request (GET, POST, etc.) t
 
 Work with res.cookie() in Express to store the token securely in the browser.
 
-Can be made HttpOnly so JavaScript can’t read them (reducing XSS risks).
+Can be made Http Only so JavaScript can’t read them (reducing XSS risks).
 
 3. How it works in the next requests
 =========================================
@@ -141,3 +140,16 @@ Your server reads the cookie, verifies the JWT, and knows who the user is.
 ✅ Possible to set secure flags (HttpOnly, Secure, SameSite).
 ✅ Works well with server-side rendering and APIs.
  */
+
+
+
+
+
+/**
+ *1. express.Router() → Creates a modular router.
+
+Allows you to define multiple routes in a separate file (authRouter) and then mount it on the main app.
+
+Keeps code organized (instead of adding all routes to app directly).
+ */
+
