@@ -11,7 +11,7 @@ const http = require("http");  //1  The "http" module lets you create a web serv
 require('dotenv').config()
 
 app.use(cors({ 
-    origin:"http://localhost:5173",   //vitelisting the domain name.   //to set the cookie in the web, so adding this configuration.
+    origin:"https://connecthub-ochre.vercel.app",   //vitelisting the domain name.   //to set the cookie in the web, so adding this configuration.
     credentials:true,
 }));
 app.use(express.json())  //this is the middleware , that convert the json object to the javasript object.(hence it is apply for all the routes).//without the middeware , it will be undefined.
