@@ -27,7 +27,6 @@ differ bet package.json and package-lock.json
 - why the same error fro boty the email and password incorrect.
 
 
-episode10
 -install cookie-parser
 -just send a dummy cookie to user
 -create GET /profile API and check if you get the cookie back
