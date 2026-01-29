@@ -1,5 +1,8 @@
 
 // Building the proper API--for CodeCrew.
+require('dotenv').config()
+console.log("Mongo URI:", process.env.DATABASE_CONNECTION_STRING);
+
 
 const express=require("express");
 const app = express();
@@ -8,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const http = require("http");  //1  The "http" module lets you create a web server
 
-require('dotenv').config()
+
 
 app.use(cors({ 
     origin:"http://localhost:5173",   //vitelisting the domain name.   //to set the cookie in the web, so adding this configuration.
@@ -41,9 +44,10 @@ connectDB()       //hence it is the promise, we were handling it.
 .then(()=>{
     
     console.log("Database connection extablished......");
+    
     //app.listen(3000 , ()=>{
-       
-     server.listen(3000, () => {   //4 //instead od app.listen , we want to write server.listen--
+        const PORT = process.env.PORT || 3000;
+     server.listen(PORT, "0.0.0.0", () => {   //4 //instead od app.listen , we want to write server.listen--
     console.log("Server is successfully listening on the port 3000...");
 });
 })
