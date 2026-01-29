@@ -15,7 +15,7 @@ const initializeSocket = (server) => {
     cors: {            //to handle the cors issues , while communicating to the websockets.
       // origin: "http://localhost:5173",
           // origin:"https://codecrew-web.onrender.com",
-      origin:"https://connecthub-web.onrender.com",
+      origin:"https://connecthub-ochre.vercel.app",
     },
   });
 
